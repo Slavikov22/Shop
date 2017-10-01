@@ -10,32 +10,43 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.miraj.shop.Adapter.CategoryAdapter;
+import com.example.miraj.shop.Model.Category;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoriesActivity extends AppCompatActivity {
-    String[] categories;
+    private List<Category> categories = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        categories = getResources().getStringArray(R.array.categories);
+        setInitialData();
 
         ListView categoryList = (ListView) findViewById(R.id.categoryList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, categories);
+        CategoryAdapter adapter = new CategoryAdapter(this, R.layout.list_category, categories);
         categoryList.setAdapter(adapter);
 
         categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                choiceCategory(categories[i]);
+                choiceCategory(categories.get(i));
             }
         });
     }
 
-    protected void choiceCategory(String category) {
+    protected void choiceCategory(Category category) {
         Intent intent = new Intent(this, CategoryActivity.class);
-        intent.putExtra("Category", category);
+        intent.putExtra("Category", category.getName());
         startActivity(intent);
+    }
+
+    private void setInitialData() {
+        for (String category:getResources().getStringArray(R.array.categories)) {
+            categories.add(new Category(category));
+        }
     }
 }
