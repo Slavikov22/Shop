@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.miraj.shop.CategoriesActivity">
+    tools:context="com.example.miraj.shop.CategoryActivity">
 
-    <ListView
-        android:id="@+id/categoryList"
+    <TextView
+        android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content" />
+
 </android.support.constraint.ConstraintLayout>

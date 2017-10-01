@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Computers</item>
+        <item>Monoblocks</item>
+        <item>Mobile phones</item>
+        <item>Tablets</item>
+        <item>Laptops</item>
+        <item>Cameras</item>
+        <item>Video games consoles</item>
+        <item>Power banks</item>
+        <item>Headphones</item>
+        <item>Smart watch</item>
+        <item>VR glasses</item>
+    </string-array>
+</resources>
