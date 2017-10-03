@@ -39,7 +39,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     protected void choiceCategory(Category category) {
-        Intent intent = new Intent(this, CategoryActivity.class);
+        Intent intent = new Intent(this, ProductsActivity.class);
         intent.putExtra("Category", category.getName());
         startActivity(intent);
     }
