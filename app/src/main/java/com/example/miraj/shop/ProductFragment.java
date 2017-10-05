@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.miraj.shop.Model.Product;
 
 public class ProductFragment extends Fragment {
-    Product product;
     View view;
+
+    Product product;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,8 +32,13 @@ public class ProductFragment extends Fragment {
         TextView priceView = view.findViewById(R.id.price);
         priceView.setText(String.valueOf(product.getPrice()));
 
-        this.view = view;
+        AnimationSet set = new AnimationSet(true);
+        set.addAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.fragment_product_scale));
+        set.addAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.fragment_product_alpha));
+        set.setDuration(300);
+        view.setAnimation(set);
 
+        this.view = view;
         return view;
     }
 
@@ -39,8 +46,6 @@ public class ProductFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Animation animation = AnimationUtils.loadAnimation(this.getContext(), R.anim.fragment_product_scale);
-        animation.setDuration(100);
-        view.startAnimation(animation);
+        this.view.getAnimation().start();
     }
 }

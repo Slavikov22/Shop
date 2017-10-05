@@ -2,7 +2,9 @@ package com.example.miraj.shop;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -11,11 +13,13 @@ import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.FakeProvider;
 import com.example.miraj.shop.Provider.IProductProvider;
+import com.example.miraj.shop.Helper.ViewHelper;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ProductsActivity extends AppCompatActivity {
+    private static final String TAG = "Products";
+
     private Category category;
     private List<Product> products;
 
@@ -46,6 +50,8 @@ public class ProductsActivity extends AppCompatActivity {
                         .beginTransaction()
                         .add(R.id.container, productFragment)
                         .commit();
+
+                ViewHelper.setEnabledAllViews(getWindow().getDecorView().getRootView(), false);
             }
         });
     }
