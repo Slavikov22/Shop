@@ -50,6 +50,4 @@ public class CategoriesActivity extends AppCompatActivity {
             categories.add(new Category(category));
         }
     }
-
-
 }
