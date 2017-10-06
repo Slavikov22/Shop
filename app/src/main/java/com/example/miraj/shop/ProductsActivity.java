@@ -101,10 +101,16 @@ public class ProductsActivity extends AppCompatActivity
 
         getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
+        setProductFragment(null);
+
         ViewHelper.setEnabledAllViews(getWindow().getDecorView().getRootView(), true);
     }
 
     public void openProductFragment(Product product) {
+        if (getProductFragment() != null) return;
+
+        ViewHelper.setEnabledAllViews(getWindow().getDecorView().getRootView(), false);
+
         ProductFragment fragment = new ProductFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("Product", product);
@@ -112,8 +118,6 @@ public class ProductsActivity extends AppCompatActivity
 
         setProductFragment(fragment);
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
-
-        ViewHelper.setEnabledAllViews(getWindow().getDecorView().getRootView(), false);
     }
 
     public ProductFragment getProductFragment() {
