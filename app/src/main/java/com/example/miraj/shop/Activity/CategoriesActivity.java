@@ -1,18 +1,15 @@
-package com.example.miraj.shop;
+package com.example.miraj.shop.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.miraj.shop.Adapter.CategoryAdapter;
 import com.example.miraj.shop.Model.Category;
+import com.example.miraj.shop.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +22,6 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        setInitialData();
-
         ListView categoryList = (ListView) findViewById(R.id.categoryList);
         CategoryAdapter adapter = new CategoryAdapter(this, R.layout.list_category, categories);
         categoryList.setAdapter(adapter);
@@ -37,6 +32,8 @@ public class CategoriesActivity extends AppCompatActivity {
                 choiceCategory(categories.get(i));
             }
         });
+
+        setInitialData();
     }
 
     protected void choiceCategory(Category category) {

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_margin="20dp"
     android:background="@drawable/fragment_product_background"
-    tools:context="com.example.miraj.shop.ProductFragment">
+    tools:context="com.example.miraj.shop.Fragment.ProductFragment">
 
     <ImageView
         android:layout_width="match_parent"

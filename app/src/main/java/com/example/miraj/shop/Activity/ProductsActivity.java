@@ -1,25 +1,30 @@
-package com.example.miraj.shop;
+package com.example.miraj.shop.Activity;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.miraj.shop.Adapter.ProductAdapter;
+import com.example.miraj.shop.Fragment.ProductFragment;
 import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.FakeProvider;
 import com.example.miraj.shop.Provider.IProductProvider;
 import com.example.miraj.shop.Helper.ViewHelper;
+import com.example.miraj.shop.R;
 
 import java.util.List;
 
 public class ProductsActivity extends AppCompatActivity
                               implements ProductFragment.OnProductEventListener{
+    private static final String CATEGORY_ARG = "Category";
+
     private static final int LEFT = 0;
     private static final int UP = 1;
     private static final int RIGHT = 2;
@@ -35,12 +40,8 @@ public class ProductsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        Bundle extras = getIntent().getExtras();
-
-        category = new Category(extras.getString("Category"));
-
-        IProductProvider provider = new FakeProvider();
-        products = provider.getProducts(category);
+        category = new Category(getIntent().getExtras().getString(CATEGORY_ARG));
+        products = new FakeProvider().getProducts(category);
 
         ListView productList = (ListView) findViewById(R.id.productList);
         ProductAdapter adapter = new ProductAdapter(this, R.layout.list_product, products);
@@ -111,11 +112,7 @@ public class ProductsActivity extends AppCompatActivity
 
         ViewHelper.setEnabledAllViews(getWindow().getDecorView().getRootView(), false);
 
-        ProductFragment fragment = new ProductFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("Product", product);
-        fragment.setArguments(bundle);
-
+        ProductFragment fragment = ProductFragment.newInstance(product);
         setProductFragment(fragment);
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
