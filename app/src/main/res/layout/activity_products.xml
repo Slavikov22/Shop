@@ -7,10 +7,22 @@
     android:layout_height="match_parent"
     tools:context="com.example.miraj.shop.Activity.ProductsActivity">
 
-    <ListView
-        android:id="@+id/productList"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent">
 
+        <fragment
+            android:id="@+id/recent_viewed_products"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:name="com.example.miraj.shop.Fragment.RecentViewedProductFragment">
+        </fragment>
+
+        <ListView
+            android:id="@+id/productList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </LinearLayout>
 </FrameLayout>

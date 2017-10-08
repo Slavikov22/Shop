@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.miraj.shop.Listener.OnSwipeTouchListener;
@@ -15,7 +16,7 @@ import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.R;
 
 public class ProductFragment extends Fragment{
-    private static final String PRODUCT_ARG = "Product";
+    private static final String ARG_PRODUCT = "Product";
 
     OnProductEventListener productEventListener;
     Product product;
@@ -23,7 +24,7 @@ public class ProductFragment extends Fragment{
     public static ProductFragment newInstance(Product product) {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
-        args.putSerializable(PRODUCT_ARG, product);
+        args.putSerializable(ARG_PRODUCT, product);
         fragment.setArguments(args);
 
         return fragment;
@@ -38,7 +39,7 @@ public class ProductFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        product = (Product) getArguments().getSerializable(PRODUCT_ARG);
+        product = (Product) getArguments().getSerializable(ARG_PRODUCT);
     }
 
     @Override
@@ -47,7 +48,9 @@ public class ProductFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_product, container, false);
 
         ((TextView) view.findViewById(R.id.name)).setText(product.getName());
+        ((TextView) view.findViewById(R.id.description)).setText(product.getDescription());
         ((TextView) view.findViewById(R.id.price)).setText(String.valueOf(product.getPrice()));
+        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(product.getImage());
 
         view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override

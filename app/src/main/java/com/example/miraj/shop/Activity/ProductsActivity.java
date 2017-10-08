@@ -1,9 +1,9 @@
 package com.example.miraj.shop.Activity;
 
-import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -12,36 +12,51 @@ import android.widget.ListView;
 
 import com.example.miraj.shop.Adapter.ProductAdapter;
 import com.example.miraj.shop.Fragment.ProductFragment;
+import com.example.miraj.shop.Fragment.RecentViewedProductFragment;
 import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.FakeProvider;
-import com.example.miraj.shop.Provider.IProductProvider;
 import com.example.miraj.shop.Helper.ViewHelper;
 import com.example.miraj.shop.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsActivity extends AppCompatActivity
-                              implements ProductFragment.OnProductEventListener{
-    private static final String CATEGORY_ARG = "Category";
+public class ProductsActivity
+        extends AppCompatActivity
+        implements
+            ProductFragment.OnProductEventListener,
+            RecentViewedProductFragment.OnRecentViewedProductsEventListener
+{
+    private static final String CATEGORY_ID_ARG = "category_id";
+    private static final String CATEGORY_NAME_ARG = "category_name";
 
     private static final int LEFT = 0;
     private static final int UP = 1;
     private static final int RIGHT = 2;
     private static final int DOWN = 3;
 
+    private static final int MAX_RECENT_VIEWED_PRODUCTS = 20;
+
     private Category category;
     private List<Product> products;
+    private List<Product> recentViewedProducts;
 
     private ProductFragment productFragment;
+
+    private boolean isRecentViewedProductFragmentEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        category = new Category(getIntent().getExtras().getString(CATEGORY_ARG));
-        products = new FakeProvider().getProducts(category);
+        category = new Category(
+                getIntent().getExtras().getInt(CATEGORY_ID_ARG),
+                getIntent().getExtras().getString(CATEGORY_NAME_ARG)
+        );
+        products = new FakeProvider(this).getProducts(category);
+        recentViewedProducts = new ArrayList<>();
 
         ListView productList = (ListView) findViewById(R.id.productList);
         ProductAdapter adapter = new ProductAdapter(this, R.layout.list_product, products);
@@ -53,6 +68,10 @@ public class ProductsActivity extends AppCompatActivity
                 openProductFragment(products.get(i));
             }
         });
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.recent_viewed_products);
+        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+        isRecentViewedProductFragmentEnabled = false;
     }
 
     @Override
@@ -76,6 +95,22 @@ public class ProductsActivity extends AppCompatActivity
     @Override
     public void closeProduct() {
         closeCurrentProductFragment(UP);
+
+        if (!isRecentViewedProductFragmentEnabled) {
+            RecentViewedProductFragment fragment = ((RecentViewedProductFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.recent_viewed_products));
+            fragment.setProducts(recentViewedProducts);
+            getSupportFragmentManager().beginTransaction().show(fragment).commit();
+            if (fragment.getView() != null)
+                fragment.getView().invalidate();
+
+            isRecentViewedProductFragmentEnabled = true;
+        }
+    }
+
+    @Override
+    public void openRecentViewedProduct(Product product) {
+        openProductFragment(product);
     }
 
     public void closeCurrentProductFragment(int direction) {
@@ -115,6 +150,10 @@ public class ProductsActivity extends AppCompatActivity
         ProductFragment fragment = ProductFragment.newInstance(product);
         setProductFragment(fragment);
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+
+        recentViewedProducts.add(product);
+        if (recentViewedProducts.size() > MAX_RECENT_VIEWED_PRODUCTS)
+            recentViewedProducts.remove(0);
     }
 
     public ProductFragment getProductFragment() {
