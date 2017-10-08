@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.miraj.shop.Adapter.CategoryAdapter;
 import com.example.miraj.shop.Model.Category;
+import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.R;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity {
     private List<Category> categories = new ArrayList<>();
+    private List<Product> recentViewedProducts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +40,15 @@ public class CategoriesActivity extends AppCompatActivity {
 
     protected void choiceCategory(Category category) {
         Intent intent = new Intent(this, ProductsActivity.class);
-        intent.putExtra("Category", category.getName());
+        intent.putExtra("category_id", category.getId());
+        intent.putExtra("category_name", category.getName());
         startActivity(intent);
     }
 
     private void setInitialData() {
-        for (String category:getResources().getStringArray(R.array.categories)) {
-            categories.add(new Category(category));
+        String[] categoryNames = getResources().getStringArray(R.array.categories);
+        for (int i = 0; i < categoryNames.length; i++) {
+            categories.add(new Category(i, categoryNames[i]));
         }
     }
 }
