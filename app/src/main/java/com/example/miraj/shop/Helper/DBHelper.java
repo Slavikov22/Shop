@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "shop";
-    private static final int DB_VERSION = 1;
+    public static final String DB_NAME = "shop";
+    public static final int DB_VERSION = 1;
 
     public static final String TABLE_PRODUCT = "product";
     public static final String TABLE_CATEGORY = "category";
@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FIELD_CATEGORY_ID = "category_id";
     public static final String FIELD_PRODUCT_ID = "product_id";
     public static final String FIELD_COUNT = "count";
+    public static final String FIELD_ADD_TIME = "add_time";
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -43,7 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 ");");
 
         db.execSQL("CREATE TABLE " + TABLE_RECENT_VIEWED_PRODUCT + " (" +
-                FIELD_PRODUCT_ID + " INTEGER PRIMARY KEY" +
+                FIELD_PRODUCT_ID + " INTEGER PRIMARY KEY," +
+                FIELD_ADD_TIME + " INTEGER" +
                 ");");
 
         db.execSQL("CREATE TABLE " + TABLE_BASKET_PRODUCT + " (" +
