@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.miraj.shop.Listener.OnSwipeTouchListener;
 import com.example.miraj.shop.Model.Product;
+import com.example.miraj.shop.Provider.DBProvider;
 import com.example.miraj.shop.R;
 
 public class ProductFragment extends Fragment{
@@ -20,6 +21,7 @@ public class ProductFragment extends Fragment{
 
     OnProductEventListener productEventListener;
     Product product;
+    DBProvider dbProvider;
 
     public static ProductFragment newInstance(Product product) {
         ProductFragment fragment = new ProductFragment();
@@ -34,12 +36,14 @@ public class ProductFragment extends Fragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         productEventListener = (OnProductEventListener) context;
+        dbProvider = new DBProvider(context);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product = (Product) getArguments().getSerializable(ARG_PRODUCT);
+        dbProvider.addRecentViewedProduct(product);
     }
 
     @Override
