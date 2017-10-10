@@ -2,6 +2,7 @@ package com.example.miraj.shop.Helper;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 
 public class ViewHelper {

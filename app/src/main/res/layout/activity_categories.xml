@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.example.miraj.shop.Activity.CategoriesActivity">
 
-    <HorizontalScrollView
-        android:id="@+id/recentViewedProductsScroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-        <LinearLayout
-            android:id="@+id/recentViewedProducts"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toolbar"
+            app:titleTextColor="@color/toolbarText">
+        </android.support.v7.widget.Toolbar>
+
+        <com.example.miraj.shop.Widget.DisableableHorizontalScrollView
+            android:id="@+id/recentViewedProductsScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/recentViewedProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </com.example.miraj.shop.Widget.DisableableHorizontalScrollView>
 
-        </LinearLayout>
-    </HorizontalScrollView>
-    
-    <ListView
-        android:id="@+id/categoryList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
-</LinearLayout>
+        <ListView
+            android:id="@+id/categoryList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+    </LinearLayout>
+</FrameLayout>
