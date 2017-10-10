@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="lightGray">#FFF7CC</color>
     <color name="dark">#2F2323</color>
+    <color name="toolbar">#b6b6b6</color>
+    <color name="toolbarText">#CC0000</color>
 </resources>

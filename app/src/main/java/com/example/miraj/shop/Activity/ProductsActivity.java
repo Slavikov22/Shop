@@ -10,7 +10,6 @@ import android.widget.ListView;
 
 import com.example.miraj.shop.Adapter.ProductAdapter;
 import com.example.miraj.shop.Fragment.ProductFragment;
-import com.example.miraj.shop.Fragment.RecentViewedProductFragment;
 import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
@@ -18,7 +17,6 @@ import com.example.miraj.shop.Provider.FakeProvider;
 import com.example.miraj.shop.Helper.ViewHelper;
 import com.example.miraj.shop.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsActivity
@@ -31,7 +29,6 @@ public class ProductsActivity
     private static final int LEFT = 0;
     private static final int UP = 1;
     private static final int RIGHT = 2;
-    private static final int DOWN = 3;
 
     private Category category;
     private List<Product> products;
