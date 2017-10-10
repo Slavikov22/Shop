@@ -91,6 +91,9 @@ public class CategoriesActivity
         recentViewedProducts = dbProvider.getRecentViewedProducts();
         Collections.reverse(recentViewedProducts);
 
+        LinearLayout container = (LinearLayout) findViewById(R.id.recentViewedProducts);
+        container.removeAllViews();
+
         for (final Product product : recentViewedProducts) {
             View view = View.inflate(this, R.layout. recent_viewed_product, null);
             ((ImageView) view.findViewById(R.id.image)).setImageBitmap(product.getImage());
@@ -103,7 +106,6 @@ public class CategoriesActivity
                 }
             });
 
-            LinearLayout container = (LinearLayout) findViewById(R.id.recentViewedProducts);
             container.addView(view);
         }
     }
