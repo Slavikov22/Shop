@@ -1,61 +1,64 @@
 package com.example.miraj.shop.Activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 
-import com.example.miraj.shop.Fragment.CategoriesFragment;
 import com.example.miraj.shop.Fragment.ProductFragment;
-import com.example.miraj.shop.Fragment.RecentViewedProductsFragment;
-import com.example.miraj.shop.Helper.DBHelper;
-import com.example.miraj.shop.Helper.ViewHelper;
+import com.example.miraj.shop.Fragment.ProductsFragment;
 import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
+import com.example.miraj.shop.Provider.FakeProvider;
+import com.example.miraj.shop.Helper.ViewHelper;
 import com.example.miraj.shop.R;
 
-public class CategoriesActivity
+import java.util.List;
+
+public class CategoryActivity
         extends AppCompatActivity
         implements
-        CategoriesFragment.OnFragmentInteractionListener,
-        RecentViewedProductsFragment.OnFragmentInteractionListener,
+        ProductsFragment.OnFragmentInteractionListener,
         ProductFragment.OnFragmentInteractionListener
 {
+    public static final String ARG_CATEGORY_ID = "category_id";
+
+    private Category category;
     private ProductFragment productFragment;
-    private RecentViewedProductsFragment recentViewedProductsFragment;
+    private ProductsFragment productsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_category);
         setSupportActionBar((Toolbar) findViewById(R.id.menuFragment));
 
-        recentViewedProductsFragment = (RecentViewedProductsFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.recentViewedProductsFragment);
+        DBProvider dbProvider = new DBProvider(this);
+        try {
+            category = dbProvider.getCategory(getIntent().getExtras().getInt(ARG_CATEGORY_ID));
+        } catch (Exception e) {}
+
+        List<Product> products = new FakeProvider(this).getProducts(category);
+
+        for (Product product : products) {
+            dbProvider.addProduct(product);
+        }
+
+        productsFragment = ProductsFragment.newInstance(products);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragmentList, productsFragment).commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public void showCategory(Category category) {
-        Intent intent = new Intent(this, CategoryActivity.class);
-        intent.putExtra(CategoryActivity.ARG_CATEGORY_ID, category.getId());
-        startActivity(intent);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public void nextProduct(Product currentProduct) {
         try {
-            Product product = recentViewedProductsFragment.getNextProduct(currentProduct);
+            Product product = productsFragment.getNextProduct(currentProduct);
             hideProduct(ProductFragment.LEFT);
             showProduct(product);
         } catch (IndexOutOfBoundsException e) {}
@@ -64,7 +67,7 @@ public class CategoriesActivity
     @Override
     public void prevProduct(Product currentProduct) {
         try {
-            Product product = recentViewedProductsFragment.getPrevProduct(currentProduct);
+            Product product = productsFragment.getPrevProduct(currentProduct);
             hideProduct(ProductFragment.RIGHT);
             showProduct(product);
         } catch (IndexOutOfBoundsException e) {}
@@ -78,6 +81,7 @@ public class CategoriesActivity
     @Override
     public void showProduct(Product product) {
         if (productFragment != null) return;
+
         ViewHelper.setEnabledAllViews(getWindow().getDecorView().getRootView(), false);
 
         productFragment = ProductFragment.newInstance(product);

@@ -41,25 +41,7 @@ public class CategoryAdapter extends ArrayAdapter {
         Category category = categories.get(position);
 
         nameView.setText(category.getName());
-
-        InputStream inputStream = null;
-        try{
-            inputStream = this.context.getAssets().open("categories/" + category.getName() + ".png");
-            Drawable d = Drawable.createFromStream(inputStream, null);
-            imageView.setImageDrawable(d);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            try{
-                if(inputStream!=null)
-                    inputStream.close();
-            }
-            catch (IOException ex){
-                ex.printStackTrace();
-            }
-        }
+        imageView.setImageBitmap(category.getImage());
 
         return view;
     }

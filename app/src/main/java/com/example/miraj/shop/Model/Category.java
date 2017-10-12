@@ -1,15 +1,21 @@
 package com.example.miraj.shop.Model;
 
+import android.graphics.Bitmap;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable{
     private int id;
     private String name;
-    private List<Product> products;
+    private ArrayList<Product> products;
+    private Bitmap image;
 
-    public Category(int id, String name) {
+    public Category(int id, String name, Bitmap image) {
         this.id = id;
         this.name = name;
+        this.image = image;
     }
 
     public int getId() {
@@ -28,11 +34,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 
@@ -42,5 +48,13 @@ public class Category {
 
     public void removeProduct(Product product) {
         this.products.remove(product);
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

@@ -1,0 +1,16 @@
+<com.example.miraj.shop.Widget.DisableableHorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.miraj.shop.Fragment.RecentViewedProductsFragment"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/products"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    </LinearLayout>
+</com.example.miraj.shop.Widget.DisableableHorizontalScrollView>
