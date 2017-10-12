@@ -69,6 +69,7 @@ public class DBProvider {
 
         cv.put(DBHelper.FIELD_ID, category.getId());
         cv.put(DBHelper.FIELD_NAME, category.getName());
+        cv.put(DBHelper.FIELD_IMAGE, BitmapHelper.getBitmapAsByteArray(category.getImage()));
 
         db.insert(DBHelper.TABLE_CATEGORY, null, cv);
         db.close();
@@ -82,9 +83,14 @@ public class DBProvider {
         if (c.moveToFirst()) {
             String name = c.getString(c.getColumnIndex(DBHelper.FIELD_NAME));
 
+            byte[] imageBytes = c.getBlob(c.getColumnIndex(DBHelper.FIELD_IMAGE));
+            Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+            Category category = new Category(id, name, image);
+
             c.close();
             db.close();
-            return new Category(id, name);
+            return category;
         } else {
             c.close();
             db.close();

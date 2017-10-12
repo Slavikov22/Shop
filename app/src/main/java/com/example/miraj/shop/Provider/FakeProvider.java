@@ -1,6 +1,7 @@
 package com.example.miraj.shop.Provider;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.miraj.shop.Model.Category;
@@ -42,5 +43,23 @@ public class FakeProvider implements IProductProvider {
             return products;
         }
         else return null;
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(0, "Laptops", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(1, "A", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(2, "B", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(3, "C", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(4, "D", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(5, "E", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(6, "F", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(7, "G", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(8, "H", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(9, "K", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+        categories.add(new Category(10, "L", BitmapFactory.decodeResource(context.getResources(), R.drawable.d)));
+
+        return categories;
     }
 }

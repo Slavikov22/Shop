@@ -16,12 +16,15 @@ import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
 import com.example.miraj.shop.R;
 
-public class ProductFragment extends Fragment{
-    private static final String ARG_PRODUCT = "Product";
+public class ProductFragment extends Fragment {
+    public static final String ARG_PRODUCT = "Product";
 
-    OnProductEventListener productEventListener;
-    Product product;
-    DBProvider dbProvider;
+    public static final int LEFT = 0;
+    public static final int RIGHT = 1;
+    public static final int TOP = 2;
+
+    private OnFragmentInteractionListener mListener;
+    private Product product;
 
     public static ProductFragment newInstance(Product product) {
         ProductFragment fragment = new ProductFragment();
@@ -35,14 +38,15 @@ public class ProductFragment extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        productEventListener = (OnProductEventListener) context;
-        dbProvider = new DBProvider(context);
+        mListener = (OnFragmentInteractionListener) context;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product = (Product) getArguments().getSerializable(ARG_PRODUCT);
+
+        DBProvider dbProvider = new DBProvider(getContext());
         dbProvider.addRecentViewedProduct(product);
     }
 
@@ -59,17 +63,17 @@ public class ProductFragment extends Fragment{
         view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeRight() {
-                productEventListener.prevProduct(product);
+                mListener.prevProduct(product);
             }
 
             @Override
             public void onSwipeLeft() {
-                productEventListener.nextProduct(product);
+                mListener.nextProduct(product);
             }
 
             @Override
             public void onSwipeTop() {
-                productEventListener.closeProduct();
+                mListener.closeProduct();
             }
         });
 
@@ -79,19 +83,44 @@ public class ProductFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        startAnimation();
+    }
 
+    public void startAnimation() {
         if (getView() != null) {
             View view = getView();
 
             AnimationSet set = new AnimationSet(true);
-            set.addAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.fragment_product_scale));
-            set.addAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.fragment_product_alpha_up));
+            set.addAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fragment_product_scale));
+            set.addAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fragment_product_alpha_up));
             set.setDuration(300);
             view.startAnimation(set);
         }
     }
 
-    public interface OnProductEventListener {
+    public void closeAnimation(int direction) {
+        if (getView() != null) {
+            View view = getView();
+
+            AnimationSet set = new AnimationSet(true);
+            set.addAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fragment_product_alpha_down));
+            switch (direction) {
+                case LEFT:
+                    set.addAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fragment_product_swipe_left));
+                    break;
+                case RIGHT:
+                    set.addAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fragment_product_swipe_right));
+                    break;
+                case TOP:
+                    set.addAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fragment_product_swipe_top));
+                    break;
+            }
+            set.setDuration(200);
+            view.setAnimation(set);
+        }
+    }
+
+    public interface OnFragmentInteractionListener {
         void nextProduct(Product currentProduct);
         void prevProduct(Product currentProduct);
         void closeProduct();

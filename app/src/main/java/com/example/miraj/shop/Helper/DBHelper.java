@@ -40,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_CATEGORY + " (" +
                 FIELD_ID + " INTEGER PRIMARY KEY, " +
-                FIELD_NAME + " TEXT" +
+                FIELD_NAME + " TEXT," +
+                FIELD_IMAGE + " BLOB" +
                 ");");
 
         db.execSQL("CREATE TABLE " + TABLE_RECENT_VIEWED_PRODUCT + " (" +

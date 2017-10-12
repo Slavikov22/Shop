@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IProductProvider {
     public List<Product> getProducts(Category category);
+    public List<Category> getCategories();
 }
