@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.miraj.shop.Helper.BitmapHelper;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.R;
 
@@ -33,7 +34,7 @@ public class ProductAdapter extends ArrayAdapter {
         Product product = products.get(position);
 
         ((TextView) view.findViewById(R.id.name)).setText(product.getName());
-        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(product.getImage());
+        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(BitmapHelper.getProductImage(product));
 
         return view;
     }

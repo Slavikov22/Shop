@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.miraj.shop.Helper.BitmapHelper;
 import com.example.miraj.shop.Listener.OnSwipeTouchListener;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
@@ -18,6 +19,7 @@ import com.example.miraj.shop.R;
 
 public class ProductFragment extends Fragment {
     public static final String ARG_PRODUCT = "Product";
+    private static final String DOLLAR = "$";
 
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
@@ -57,8 +59,8 @@ public class ProductFragment extends Fragment {
 
         ((TextView) view.findViewById(R.id.name)).setText(product.getName());
         ((TextView) view.findViewById(R.id.description)).setText(product.getDescription());
-        ((TextView) view.findViewById(R.id.price)).setText(String.valueOf(product.getPrice()));
-        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(product.getImage());
+        ((TextView) view.findViewById(R.id.price)).setText(DOLLAR + String.valueOf(product.getPrice()));
+        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(BitmapHelper.getProductImage(product));
 
         view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override

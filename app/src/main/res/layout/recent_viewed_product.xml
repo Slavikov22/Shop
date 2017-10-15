@@ -8,7 +8,8 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_height="80dp"
+        android:background="@drawable/black_border_small"/>
 
     <TextView
         android:id="@+id/name"

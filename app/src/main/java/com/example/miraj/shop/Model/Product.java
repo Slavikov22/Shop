@@ -1,7 +1,5 @@
 package com.example.miraj.shop.Model;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 
 public class Product implements Serializable{
@@ -9,15 +7,13 @@ public class Product implements Serializable{
     private String name;
     private String description;
     private int price;
-    private Bitmap image;
-    private Category category;
+    private String category;
 
-    public Product(int id, String name, String description, int price, Bitmap image, Category category) {
+    public Product(int id, String name, String description, int price, String category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.image = image;
         this.category = category;
     }
 
@@ -53,19 +49,11 @@ public class Product implements Serializable{
         this.price = price;
     }
 
-    public Bitmap getImage() {
-        return image;
-    }
-
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
-
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }

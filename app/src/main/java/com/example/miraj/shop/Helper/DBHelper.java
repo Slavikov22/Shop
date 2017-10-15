@@ -17,8 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FIELD_NAME = "name";
     public static final String FIELD_DESCRIPTION = "description";
     public static final String FIELD_PRICE = "price";
-    public static final String FIELD_IMAGE = "image";
-    public static final String FIELD_CATEGORY_ID = "category_id";
+    public static final String FIELD_CATEGORY = "category";
     public static final String FIELD_PRODUCT_ID = "product_id";
     public static final String FIELD_COUNT = "count";
     public static final String FIELD_ADD_TIME = "add_time";
@@ -34,14 +33,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 FIELD_NAME + " TEXT, " +
                 FIELD_DESCRIPTION + " TEXT, " +
                 FIELD_PRICE + " INTEGER, " +
-                FIELD_IMAGE + " BLOB, " +
-                FIELD_CATEGORY_ID + " INTEGER " +
+                FIELD_CATEGORY + " TEXT" +
                 ");");
 
         db.execSQL("CREATE TABLE " + TABLE_CATEGORY + " (" +
-                FIELD_ID + " INTEGER PRIMARY KEY, " +
-                FIELD_NAME + " TEXT," +
-                FIELD_IMAGE + " BLOB" +
+                FIELD_NAME + " TEXT PRIMARY KEY" +
                 ");");
 
         db.execSQL("CREATE TABLE " + TABLE_RECENT_VIEWED_PRODUCT + " (" +
