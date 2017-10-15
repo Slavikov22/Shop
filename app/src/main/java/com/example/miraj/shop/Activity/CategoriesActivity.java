@@ -3,10 +3,6 @@ package com.example.miraj.shop.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 
 import com.example.miraj.shop.Fragment.CategoriesFragment;
 import com.example.miraj.shop.Fragment.ProductFragment;
@@ -15,8 +11,10 @@ import com.example.miraj.shop.Helper.DBHelper;
 import com.example.miraj.shop.Helper.ViewHelper;
 import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
-import com.example.miraj.shop.Provider.DBProvider;
+import com.example.miraj.shop.Provider.ProductProvider;
 import com.example.miraj.shop.R;
+
+import java.util.ArrayList;
 
 public class CategoriesActivity
         extends AppCompatActivity
@@ -31,24 +29,16 @@ public class CategoriesActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_categories);
-        setSupportActionBar((Toolbar) findViewById(R.id.menuFragment));
 
         recentViewedProductsFragment = (RecentViewedProductsFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.recentViewedProductsFragment);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
     public void showCategory(Category category) {
         Intent intent = new Intent(this, CategoryActivity.class);
-        intent.putExtra(CategoryActivity.ARG_CATEGORY_ID, category.getId());
+        intent.putExtra(CategoryActivity.ARG_CATEGORY, category);
         startActivity(intent);
     }
 

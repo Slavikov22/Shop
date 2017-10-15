@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.miraj.shop.Helper.BitmapHelper;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
 import com.example.miraj.shop.R;
@@ -76,8 +77,8 @@ public class RecentViewedProductsFragment extends Fragment {
 
             for (final Product product : products) {
                 View view = View.inflate(getContext(), R.layout.recent_viewed_product, null);
-                ((ImageView) view.findViewById(R.id.image)).setImageBitmap(product.getImage());
                 ((TextView) view.findViewById(R.id.name)).setText(product.getName());
+                ((ImageView) view.findViewById(R.id.image)).setImageBitmap(BitmapHelper.getProductImage(product));
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override

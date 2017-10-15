@@ -1,7 +1,6 @@
 package com.example.miraj.shop.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.miraj.shop.Helper.BitmapHelper;
 import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class CategoryAdapter extends ArrayAdapter {
@@ -35,13 +33,11 @@ public class CategoryAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = inflater.inflate(this.layout, parent, false);
 
-        ImageView imageView = view.findViewById(R.id.image);
-        TextView nameView = view.findViewById(R.id.name);
-
         Category category = categories.get(position);
 
-        nameView.setText(category.getName());
-        imageView.setImageBitmap(category.getImage());
+        ((TextView) view.findViewById(R.id.name)).setText(category.getName());
+        ((ImageView) view.findViewById(R.id.image))
+                .setImageBitmap(BitmapHelper.getCategoryImage(context, category));
 
         return view;
     }

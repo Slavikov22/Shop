@@ -11,9 +11,8 @@ import android.widget.ListView;
 
 import com.example.miraj.shop.Adapter.CategoryAdapter;
 import com.example.miraj.shop.Model.Category;
+import com.example.miraj.shop.Provider.CategoryProvider;
 import com.example.miraj.shop.Provider.DBProvider;
-import com.example.miraj.shop.Provider.FakeProvider;
-import com.example.miraj.shop.Provider.IProductProvider;
 import com.example.miraj.shop.R;
 
 import java.util.List;
@@ -31,9 +30,10 @@ public class CategoriesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DBProvider dbProvider = new DBProvider(getContext());
-        IProductProvider provider = new FakeProvider(getContext());
+        CategoryProvider provider = new CategoryProvider(getContext());
         categories = provider.getCategories();
+
+        DBProvider dbProvider = new DBProvider(getContext());
         for (Category category : categories)
             dbProvider.addCategory(category);
     }
