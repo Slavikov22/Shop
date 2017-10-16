@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.miraj.shop.Activity.CartActivity;
 import com.example.miraj.shop.R;
@@ -56,6 +57,9 @@ public class MenuFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CartActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.about:
+                Toast toast = Toast.makeText(getContext(), "Created by Slava Yakovlev", Toast.LENGTH_LONG);
+                toast.show();
         }
         return true;
         //return super.onOptionsItemSelected(item);

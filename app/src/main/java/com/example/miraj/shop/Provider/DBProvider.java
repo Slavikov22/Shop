@@ -113,4 +113,74 @@ public class DBProvider {
         db.close();
         return products;
     }
+
+    public void addProductToCart(Product product) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.FIELD_PRODUCT_ID, product.getId());
+        cv.put(DBHelper.FIELD_COUNT, 1);
+
+        db.insert(DBHelper.TABLE_CART_PRODUCT, null, cv);
+
+        db.close();
+    }
+
+    public List<Product> getCartProducts() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String orderBy = DBHelper.FIELD_PRODUCT_ID;
+        Cursor c = db.query(DBHelper.TABLE_CART_PRODUCT, null, null, null, null, null, orderBy);
+
+        List<Product> products = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do {
+                int product_id = c.getInt(c.getColumnIndex(DBHelper.FIELD_PRODUCT_ID));
+                products.add(getProduct(product_id));
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        db.close();
+        return products;
+    }
+
+    public int getCartProductCount(Product product) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String selection = DBHelper.FIELD_PRODUCT_ID + " = ?";
+        String[] selectionArgs = new String[] { String.valueOf(product.getId()) };
+
+        Cursor c = db.query(DBHelper.TABLE_CART_PRODUCT, null,
+                selection, selectionArgs, null, null, null);
+
+        int count = 0;
+        if (c.moveToFirst()) {
+            count = c.getInt(c.getColumnIndex(DBHelper.FIELD_COUNT));
+        }
+
+        c.close();
+        db.close();
+        return count;
+    }
+
+    public void updateCartProductCount(Product product, int count) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.FIELD_PRODUCT_ID, product.getId());
+        cv.put(DBHelper.FIELD_COUNT, count);
+
+        String selection = DBHelper.FIELD_PRODUCT_ID + " = ?";
+        String[] selectionArgs = new String[] { String.valueOf(product.getId()) };
+
+        Cursor c = db.query(DBHelper.TABLE_CART_PRODUCT, null,
+                selection, selectionArgs, null, null, null);
+
+        if (c.moveToFirst())
+            db.update(DBHelper.TABLE_CART_PRODUCT, cv, selection, selectionArgs);
+
+        c.close();
+        db.close();
+    }
 }
