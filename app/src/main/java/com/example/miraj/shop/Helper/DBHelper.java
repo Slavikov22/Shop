@@ -11,7 +11,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_PRODUCT = "product";
     public static final String TABLE_CATEGORY = "category";
     public static final String TABLE_RECENT_VIEWED_PRODUCT = "recent_viewed_product";
-    public static final String TABLE_BASKET_PRODUCT = "basket_product";
+    public static final String TABLE_CART_PRODUCT = "cart_product";
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 FIELD_ADD_TIME + " INTEGER" +
                 ");");
 
-        db.execSQL("CREATE TABLE " + TABLE_BASKET_PRODUCT + " (" +
+        db.execSQL("CREATE TABLE " + TABLE_CART_PRODUCT + " (" +
                 FIELD_PRODUCT_ID + " INTEGER PRIMARY KEY," +
                 FIELD_COUNT + " INTEGER" +
                 ");");

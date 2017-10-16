@@ -4,11 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.miraj.shop.Helper.BitmapHelper;
@@ -76,6 +80,14 @@ public class ProductFragment extends Fragment {
             @Override
             public void onSwipeTop() {
                 mListener.closeProduct();
+            }
+        });
+
+        view.findViewById(R.id.add_to_cart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DBProvider dbProvider = new DBProvider(getContext());
+                dbProvider.addProductToCart(product);
             }
         });
 

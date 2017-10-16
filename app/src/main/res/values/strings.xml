@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Shop</string>
     <string name="basket">Basket</string>
+    <string name="price">Price:</string>
+    <string name="total_price">Total:</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="about">About</string>
 </resources>

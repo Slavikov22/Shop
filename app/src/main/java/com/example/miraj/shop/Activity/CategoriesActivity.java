@@ -3,6 +3,7 @@ package com.example.miraj.shop.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.miraj.shop.Fragment.CategoriesFragment;
 import com.example.miraj.shop.Fragment.ProductFragment;
@@ -23,6 +24,8 @@ public class CategoriesActivity
         RecentViewedProductsFragment.OnFragmentInteractionListener,
         ProductFragment.OnFragmentInteractionListener
 {
+    private static final String TAG = "CATEGORIES_ACTIVITY";
+
     private ProductFragment productFragment;
     private RecentViewedProductsFragment recentViewedProductsFragment;
 
@@ -33,6 +36,44 @@ public class CategoriesActivity
 
         recentViewedProductsFragment = (RecentViewedProductsFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.recentViewedProductsFragment);
+
+        Log.i(TAG, "Created");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "Started");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "Resumed");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "Paused");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "Stopped");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "Destroyed");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "Restarted");
     }
 
     @Override
