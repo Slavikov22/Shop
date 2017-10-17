@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 public class ProductProvider {
-    public static final String SHOP_URL = "http://10.0.2.2:80/shop/";
+    public static final String SHOP_URL = "http://192.168.1.3/shop/";
     private static final String METHOD = "GET";
 
     public static Product getProduct(int id) {

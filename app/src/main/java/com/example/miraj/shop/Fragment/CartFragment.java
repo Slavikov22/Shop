@@ -95,7 +95,7 @@ public class CartFragment extends Fragment {
                 ((TextView) cartProductView.findViewById(R.id.name)).setText(product.getName());
                 ((TextView) cartProductView.findViewById(R.id.price)).setText("$" + String.valueOf(product.getPrice()));
                 ((ImageView) cartProductView.findViewById(R.id.image)).setImageBitmap(BitmapHelper.getProductImage(product));
-                ((TextView) cartProductView.findViewById(R.id.count)).setText("$" + dbProvider.getCartProductCount(product));
+                ((TextView) cartProductView.findViewById(R.id.count)).setText(String.valueOf(dbProvider.getCartProductCount(product)));
 
                 cartProductView.findViewById(R.id.dec).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -104,7 +104,7 @@ public class CartFragment extends Fragment {
                         if (count == 1) return;
                         dbProvider.updateCartProductCount(product, count - 1);
                         ((TextView) cartProductView.findViewById(R.id.count))
-                                .setText("$" + dbProvider.getCartProductCount(product));
+                                .setText(String.valueOf(dbProvider.getCartProductCount(product)));
                         invalidatePrices();
                     }
                 });
@@ -116,7 +116,7 @@ public class CartFragment extends Fragment {
                         if (count == 99) return;
                         dbProvider.updateCartProductCount(product, count + 1);
                         ((TextView) cartProductView.findViewById(R.id.count))
-                                .setText("$" + dbProvider.getCartProductCount(product));
+                                .setText(String.valueOf(dbProvider.getCartProductCount(product)));
                         invalidatePrices();
                     }
                 });

@@ -20,6 +20,7 @@ import com.example.miraj.shop.Listener.OnSwipeTouchListener;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
 import com.example.miraj.shop.R;
+import com.example.miraj.shop.Widget.ZoomImageView;
 
 public class ProductFragment extends Fragment {
     public static final String ARG_PRODUCT = "Product";
@@ -64,7 +65,20 @@ public class ProductFragment extends Fragment {
         ((TextView) view.findViewById(R.id.name)).setText(product.getName());
         ((TextView) view.findViewById(R.id.description)).setText(product.getDescription());
         ((TextView) view.findViewById(R.id.price)).setText(DOLLAR + String.valueOf(product.getPrice()));
+
         ((ImageView) view.findViewById(R.id.image)).setImageBitmap(BitmapHelper.getProductImage(product));
+        view.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = ZoomImageFragment.newInstance(product);
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack("")
+                        .add(R.id.container, fragment)
+                        .commit();
+            }
+        });
 
         view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
