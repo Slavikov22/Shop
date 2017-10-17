@@ -126,6 +126,15 @@ public class DBProvider {
         db.close();
     }
 
+    public void removeCartProduct(Product product) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String where = DBHelper.FIELD_PRODUCT_ID + " = ?";
+
+        db.delete(DBHelper.TABLE_CART_PRODUCT, where,
+                new String[] { String.valueOf(product.getId()) });
+        db.close();
+    }
+
     public List<Product> getCartProducts() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
