@@ -11,8 +11,10 @@ import com.example.miraj.shop.Provider.DBProvider;
 import com.example.miraj.shop.Helper.ViewHelper;
 import com.example.miraj.shop.Provider.ProductProvider;
 import com.example.miraj.shop.R;
+import com.example.miraj.shop.Service.StateService;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CategoryActivity
         extends AppCompatActivity
@@ -20,6 +22,7 @@ public class CategoryActivity
         ProductsFragment.OnFragmentInteractionListener,
         ProductFragment.OnFragmentInteractionListener
 {
+    private static final String TAG = "CATEGORY_ACTIVITY";
     public static final String ARG_CATEGORY = "category";
 
     private Category category;
@@ -42,6 +45,18 @@ public class CategoryActivity
 
         productsFragment = ProductsFragment.newInstance(products);
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentList, productsFragment).commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StateService.startAction(this, TAG + " displayed");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StateService.stopAction(this);
     }
 
     @Override
