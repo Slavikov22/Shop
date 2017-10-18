@@ -14,6 +14,8 @@ import com.example.miraj.shop.Model.Category;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.ProductProvider;
 import com.example.miraj.shop.R;
+import com.example.miraj.shop.Service.SpecialOfferService;
+import com.example.miraj.shop.Service.StateService;
 
 import java.util.ArrayList;
 
@@ -38,6 +40,8 @@ public class CategoriesActivity
                 .findFragmentById(R.id.recentViewedProductsFragment);
 
         Log.i(TAG, "Created");
+
+        startService(new Intent(this, SpecialOfferService.class));
     }
 
     @Override
@@ -50,12 +54,14 @@ public class CategoriesActivity
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "Resumed");
+        StateService.startAction(this, TAG + " displayed");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "Paused");
+        StateService.stopAction(this);
     }
 
     @Override
