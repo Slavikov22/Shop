@@ -16,6 +16,7 @@ import com.example.miraj.shop.Helper.BitmapHelper;
 import com.example.miraj.shop.Model.Product;
 import com.example.miraj.shop.Provider.DBProvider;
 import com.example.miraj.shop.R;
+import com.example.miraj.shop.Widget.ClickButton;
 
 import org.w3c.dom.Text;
 
@@ -42,9 +43,9 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-        view.findViewById(R.id.buy).setOnClickListener(new View.OnClickListener() {
+        ((ClickButton) view.findViewById(R.id.buy)).setOnMyClickListener(new ClickButton.OnMyClickListener() {
             @Override
-            public void onClick(View view) {
+            public void OnMyClick(View view) {
                 for (Product product : products) {
                     View v = views.get(product);
                     if (((CheckBox) v.findViewById(R.id.selected)).isChecked()) {
