@@ -1,6 +1,7 @@
 package com.example.miraj.shop.Fragment;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ public class ProductFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Product product;
 
+    MediaPlayer mediaPlayer;
+
     public static ProductFragment newInstance(Product product) {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
@@ -46,6 +49,24 @@ public class ProductFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (OnFragmentInteractionListener) context;
+
+        mediaPlayer = MediaPlayer.create(context, R.raw.click);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.stop();
+
+                if (getView() != null) {
+                    Button button = (Button) getView().findViewById(R.id.add_to_cart);
+                    button.setEnabled(false);
+                    try {
+                        mediaPlayer.prepare();
+                        mediaPlayer.seekTo(0);
+                        button.setEnabled(true);
+                    } catch (Throwable t) {}
+                }
+            }
+        });
     }
 
     @Override
@@ -102,6 +123,7 @@ public class ProductFragment extends Fragment {
             public void onClick(View view) {
                 DBProvider dbProvider = new DBProvider(getContext());
                 dbProvider.addProductToCart(product);
+                mediaPlayer.start();
             }
         });
 
@@ -145,6 +167,14 @@ public class ProductFragment extends Fragment {
             }
             set.setDuration(200);
             view.setAnimation(set);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
         }
     }
 
