@@ -18,6 +18,7 @@ import com.example.miraj.shop.Service.SpecialOfferService;
 import com.example.miraj.shop.Service.StateService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriesActivity
         extends AppCompatActivity
@@ -41,7 +42,9 @@ public class CategoriesActivity
 
         Log.i(TAG, "Created");
 
-        startService(new Intent(this, SpecialOfferService.class));
+        List<Product> products = ProductProvider.getProducts();
+        if (products != null)
+            startService(new Intent(this, SpecialOfferService.class));
     }
 
     @Override

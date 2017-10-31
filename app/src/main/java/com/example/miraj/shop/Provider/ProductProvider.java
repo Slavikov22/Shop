@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 public class ProductProvider {
-    public static final String SHOP_URL = "http://192.168.1.3/shop/";
+    public static final String SHOP_URL = "http://192.168.43.34/shop/";
     private static final String METHOD = "GET";
 
     public static Product getProduct(int id) {
@@ -34,10 +34,14 @@ public class ProductProvider {
 
     public static ArrayList<Product> getProducts(Category category) {
         ArrayList<Product> products = new ArrayList<>();
-        for (Product product : getProducts())
-            if (product.getCategory().equals(category.getName()))
-                products.add(product);
-        return products;
+        ArrayList<Product> allProducts = getProducts();
+        if (allProducts != null) {
+            for (Product product : getProducts())
+                if (product.getCategory().equals(category.getName()))
+                    products.add(product);
+            return products;
+        }
+        else return null;
     }
 
     private static class GetProductsTask extends AsyncTask<String, Void, ArrayList<Product>> {
@@ -47,6 +51,7 @@ public class ProductProvider {
                 URL url = new URL(strings[0]);
                 HttpURLConnection c = (HttpURLConnection) url.openConnection();
                 c.setRequestMethod(METHOD);
+                c.setConnectTimeout(500);
                 c.connect();
 
                 String json = StreamHelper.convertInputStreamToString(c.getInputStream());
