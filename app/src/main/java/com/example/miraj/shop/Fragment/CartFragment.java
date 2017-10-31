@@ -3,6 +3,7 @@ package com.example.miraj.shop.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CartFragment extends Fragment {
+    private static final String TAG = "update";
     private OnFragmentInteractionListener mListener;
     private List<Product> products;
     private Map<Product, View> views;
@@ -60,6 +62,13 @@ public class CartFragment extends Fragment {
                 updateProducts();
                 updateViews();
                 invalidatePrices();
+            }
+        });
+
+        view.findViewById(R.id.buyAll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.showAllOnTable();
             }
         });
 
@@ -104,6 +113,7 @@ public class CartFragment extends Fragment {
                         int count = dbProvider.getCartProductCount(product);
                         if (count == 1) return;
                         dbProvider.updateCartProductCount(product, count - 1);
+                        Log.i(TAG, product.getName() + " set " + String.valueOf(dbProvider.getCartProductCount(product)));
                         ((TextView) cartProductView.findViewById(R.id.count))
                                 .setText(String.valueOf(dbProvider.getCartProductCount(product)));
                         invalidatePrices();
@@ -116,6 +126,7 @@ public class CartFragment extends Fragment {
                         int count = dbProvider.getCartProductCount(product);
                         if (count == 99) return;
                         dbProvider.updateCartProductCount(product, count + 1);
+                        Log.i(TAG, product.getName() + " set " + String.valueOf(dbProvider.getCartProductCount(product)));
                         ((TextView) cartProductView.findViewById(R.id.count))
                                 .setText(String.valueOf(dbProvider.getCartProductCount(product)));
                         invalidatePrices();
@@ -126,6 +137,17 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         invalidatePrices();
+                    }
+                });
+
+                cartProductView.findViewById(R.id.remove).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (getView() != null) {
+                            dbProvider.removeCartProduct(product);
+                            ((LinearLayout) getView().findViewById(R.id.productList)).removeView(cartProductView);
+                            invalidatePrices();
+                        }
                     }
                 });
 
@@ -158,8 +180,10 @@ public class CartFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mListener = (OnFragmentInteractionListener) context;
     }
 
     public interface OnFragmentInteractionListener {
+        void showAllOnTable();
     }
 }

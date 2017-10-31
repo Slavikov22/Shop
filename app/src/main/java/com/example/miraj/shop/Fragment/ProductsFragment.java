@@ -43,6 +43,9 @@ public class ProductsFragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_products, c, false);
 
+        if (products == null)
+            return inflater.inflate(R.layout.not_connection, c, false);
+
         ListView container = (ListView) view;
         container.setAdapter(new ProductAdapter(getContext(), R.layout.list_product, products));
         container.setOnItemClickListener(new AdapterView.OnItemClickListener() {

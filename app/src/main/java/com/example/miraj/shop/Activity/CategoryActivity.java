@@ -39,9 +39,10 @@ public class CategoryActivity
         List<Product> products = ProductProvider.getProducts(category);
 
         DBProvider dbProvider = new DBProvider(this);
-        for (Product product : products) {
-            dbProvider.addProduct(product);
-        }
+        if (products != null)
+            for (Product product : products) {
+                dbProvider.addProduct(product);
+            }
 
         productsFragment = ProductsFragment.newInstance(products);
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentList, productsFragment).commit();

@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/white_gray">
 
     <CheckBox
         android:id="@+id/selected"
@@ -104,5 +105,17 @@
                 android:padding="0dp"
                 android:text="+"/>
         </android.support.constraint.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/remove"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="10dp"
+            android:padding="0dp"
+            android:background="@drawable/circle_button"
+            android:src="@drawable/remove"
+            android:scaleType="fitCenter"/>
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>
